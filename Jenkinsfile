@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Clonar repositorio') {
             steps {
-                git 'https://github.com/Aler011/jenkins-docker-web-framework.git'
+                git branch: 'main', url: 'https://github.com/Aler011/jenkins-docker-web-framework.git'
             }
         }
 
