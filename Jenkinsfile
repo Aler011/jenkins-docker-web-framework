@@ -17,7 +17,7 @@ pipeline {
             steps {
                 script {
                     def buildTag = env.BUILD_ID
-                    bat "docker build -t %IMAGE_NAME%:%BUILD_ID% ."
+                    bat "docker build -t $IMAGE_NAME:$BUILD_ID ."
                 }
             }
         }
@@ -26,7 +26,7 @@ pipeline {
             steps {
                 script {
                     bat """
-                        docker ps -q --filter "name=%CONTAINER_NAME%" | findstr . >nul && docker stop %CONTAINER_NAME% || exit 0
+                        docker ps -q --filter "name=$CONTAINER_NAME" | findstr . >nul && docker stop $CONTAINER_NAME || exit 0
                     """
                 }
             }
@@ -35,7 +35,7 @@ pipeline {
         stage('Ejecutar nuevo contenedor') {
             steps {
                 script {
-                    bat "docker run -d --name %CONTAINER_NAME% -p 5001:5000 %IMAGE_NAME%:%BUILD_ID%"
+                    bat "docker run -d --name $CONTAINER_NAME -p 5001:5000 $IMAGE_NAME:$BUILD_ID"
                 }
             }
         }
